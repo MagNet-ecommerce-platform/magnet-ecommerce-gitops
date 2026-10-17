@@ -1,0 +1,38 @@
+# Development environment overrides for Identity Service.
+
+replicaCount: 1
+
+image:
+  repository: identity-service
+  tag: "0.1.1"
+  pullPolicy: IfNotPresent
+
+env:
+  springProfilesActive: dev
+
+  identityDb:
+    host: host.docker.internal
+    port: 5432
+    name: identity_db
+    user: identity_user
+
+  kafka:
+    bootstrapServers: host.docker.internal:29092
+
+  jwt:
+    accessTokenExpiration: "900000"
+    refreshTokenExpiration: "604800000"
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+# Docker Desktop/k3d development host mapping only.
+hostAliases:
+  - ip: "192.168.65.254"
+    hostnames:
+      - "host.docker.internal"

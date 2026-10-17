@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: magnet-platform
+  namespace: argocd
+spec:
+  description: MagNet platform services managed through GitOps
+  sourceRepos:
+    - https://github.com/MagNet-ecommerce-platform/magnet-ecommerce-gitops.git
+  destinations:
+    - namespace: magnet
+      server: https://kubernetes.default.svc
+  namespaceResourceWhitelist:
+    - group: apps
+      kind: Deployment
+    - group: ""
+      kind: Service
+    - group: ""
+      kind: ServiceAccount
